@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import urllib
 
 games_header = {
     'user-agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -23,15 +24,19 @@ data_headers = {
     'x-nba-stats-token': 'true'
 }
 
+proxies = {
+  "http":'http://138.68.42.77:3128',
+  "https":'http://50.114.128.23:3128'
+}
 
 def get_json_data(url):
-    raw_data = requests.get(url, headers=data_headers)
+    raw_data = requests.get(url, headers=data_headers, proxies=proxies)
     json = raw_data.json()
     return json.get('resultSets')
 
 
 def get_todays_games_json(url):
-    raw_data = requests.get(url, headers=games_header)
+    raw_data = requests.get(url, headers=games_header, proxies=proxies)
     json = raw_data.json()
     return json.get('gs').get('g')
 
